@@ -29,7 +29,7 @@ func (a MyAdapter) Execute(message []byte) {
     fmt.Println(message)
 }
 ```
-So it's all. Then you can use this.
+So it's all. You can use it.
 ```go
 slogger.New(MyAdapter{}).WriteString("Hello World!")
 ```
