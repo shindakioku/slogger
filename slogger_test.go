@@ -1,8 +1,8 @@
 package slogger
 
 import (
+	"github.com/shindakioku/slogger/adapters"
 	"github.com/stretchr/testify/assert"
-	"slogger/adapters"
 	"testing"
 )
 

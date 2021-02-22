@@ -6,7 +6,7 @@ Adapter it's a simple (or not) handler for your logging actions. It will be call
 ### Install
 
 ```go
-go get -u https://github.com/shindakioku/slogger
+go get -u github.com/shindakioku/slogger
 ```
 
 ### How to use
