@@ -2,6 +2,7 @@ package adapters
 
 import (
 	"bytes"
+	"context"
 	"log"
 	"net/http"
 )
@@ -11,6 +12,7 @@ import (
 // You must use `New` function for create instance of the adapter
 // adapters.NewLogstash("http://localhost:8080", &http.Client{}, 3)
 type LogstashAdapter struct {
+	context     context.Context
 	url         string
 	httpClient  *http.Client
 	messages    chan []byte
@@ -33,6 +35,7 @@ func (a LogstashAdapter) waiting() {
 			}
 
 			req.Header.Set("Content-Type", "application/json; charset=utf-8")
+			req.WithContext(a.context)
 			if _, err = a.httpClient.Do(req); err != nil {
 				a.writeErrors <- []byte(err.Error())
 			}
@@ -43,8 +46,9 @@ func (a LogstashAdapter) waiting() {
 	}
 }
 
-func NewLogstash(url string, httpClient *http.Client, chanLength uint8) *LogstashAdapter {
+func NewLogstash(context context.Context, url string, httpClient *http.Client, chanLength uint16) *LogstashAdapter {
 	adapter := &LogstashAdapter{
+		context:     context,
 		url:         url,
 		messages:    make(chan []byte, chanLength),
 		writeErrors: make(chan []byte, chanLength),
