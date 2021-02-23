@@ -11,7 +11,7 @@ func TestLogstashAdapter_Execute(t *testing.T) {
 	testServer := httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 	}))
 	defer func() { testServer.Close() }()
-	logstashAdapter := NewLogstash("http://localhost:8080", testServer.Client(), 1)
+	logstashAdapter := NewLogstash(nil, "http://localhost:8080", testServer.Client(), 1)
 	logstashAdapter.messages = make(chan []byte, 100)
 
 	cases := []struct {
